@@ -33,7 +33,7 @@ async function createPerformance(req, res, next) {
 
     const numericPrice = Number(price);
 
-    if (!Number.isInterger(numericPrice) || numericPrice < 0) {
+    if (!Number.isInteger(numericPrice) || numericPrice < 0) {
       return res.status(400).json({
         error : `가격은 0 이상의 정수여야 합니다.`,
       });
@@ -41,7 +41,7 @@ async function createPerformance(req, res, next) {
 
     // TODO 2-3. Supabase에 데이터 등록
     const { data, error } = await supabase 
-      .from(`performance`)
+      .from(`performances`)
       .insert({ title, venue, starts_at, price: numericPrice })
       .select()
       .single();
@@ -89,8 +89,8 @@ async function updatePerformance(req, res, next) {
 
     // TODO 3-4. Supabase 데이터 수정
     const { data, error } = await supabase
-      .from(`performance`)
-      .update({ title })
+      .from(`performances`)
+      .update(updates)
       .eq('id', id)
       .select()
       .single();
@@ -117,7 +117,7 @@ async function deletePerformance(req, res, next) {
     const { id } = req.params;
     // TODO 4-2. Supabase 데이터 삭제
     const { data, error } = await supabase
-      .from(`performance`)
+      .from(`performances`)
       .delete()
       .eq(`id`, id)
       .select()
